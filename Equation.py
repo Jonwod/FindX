@@ -11,17 +11,17 @@ class Equation:
 
 
 # ~~~~~~ TESTING ~~~~~~~~
-from Expression import *
-
-three = Constant(3)
-two = Constant(2)
-
-x = Variable()
-
-
-three_plus_two_plus_x = Plus(Plus(three, two), x)
-
-equation = Equation(three_plus_two_plus_x, Constant(13))
-
-print(equation)
+# from Expression import *
+#
+# three = Constant(3)
+# two = Constant(2)
+#
+# x = Variable('x')
+#
+#
+# three_plus_two_plus_x = Addition(Addition(three, two), x)
+#
+# equation = Equation(three_plus_two_plus_x, Constant(13))
+#
+# print(equation)
 # ~~~~~~~~~~~~~~~~~~~~~~~~

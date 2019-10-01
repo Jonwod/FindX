@@ -2,6 +2,7 @@ from Equation import Equation
 from Expression import *
 import Symbols
 
+
 class Token:
     """ Stores a string value identified as a single token by the lexer"""
     def __init__(self, value):
@@ -9,6 +10,7 @@ class Token:
 
     def __str__(self):
         return "<" + self.value + ">"
+
 
 def lex(string):
     """ Processes input string and returns an ordered list of Tokens (or None if string
@@ -29,7 +31,7 @@ def lex(string):
             add_token(current_token)
             add_token(c)
             current_token = ""
-        elif c.isalpha() or c.isdigit():
+        elif c.isalpha() or c.isdigit() or c == '.':
             current_token += c
         else:
             print("Error in lexer: character" + c + " is invalid")

@@ -18,9 +18,11 @@ class Constant(Expression):
 
 
 class Variable(Expression):
-    """ Note that all variables are just called x at the moment """
+    def __init__(self, name):
+        self.name = str(name)
+
     def __str__(self):
-        return "x"
+        return self.name
 
 
 class BinaryOperation(Expression):
@@ -28,12 +30,40 @@ class BinaryOperation(Expression):
         self.op1, self.op2 = op1, op2
 
 
-class Plus(BinaryOperation):
+class Power(BinaryOperation):
+    def __str__(self):
+        return str(self.op1) + " ^ " + str(self.op2)
+
+
+class Multiplication(BinaryOperation):
+    def __str__(self):
+        return str(self.op1) + " * " + str(self.op2)
+
+
+class Division(BinaryOperation):
+    def __str__(self):
+        return str(self.op1) + " / " + str(self.op2)
+
+
+class Addition(BinaryOperation):
     def evaluate(self):
         return self.op1 + self.op2
 
     def __str__(self):
         return str(self.op1) + " + " + str(self.op2)
+
+
+class Subtraction(BinaryOperation):
+    def __str__(self):
+        return str(self.op1) + " - " + str(self.op2)
+
+
+class BracketExpression(Expression):
+    def __init__(self, contained_expression):
+        self.contained_expression = contained_expression
+
+    def __str__(self):
+        return "(" + str(self.contained_expression) + ")"
 
 
 # class CompoundExpression(Expression):
