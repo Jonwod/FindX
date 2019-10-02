@@ -53,7 +53,8 @@ def parse_expression(tokens):
     # The plan:
     # Cycle through operations in reverse order of priority and from each identified operation,
     for n_priority_symbols in reversed(order_of_operations):
-        for i in range(0, len(tokens)):
+        i = 0
+        while i < len(tokens):
             if tokens[i].value in n_priority_symbols:
                 if tokens[i].value in Symbols.operators:
                     operation = make_operation(tokens[i].value)
@@ -64,12 +65,28 @@ def parse_expression(tokens):
                     else:
                         print("Syntax error in parse_expression: operator " + tokens[i].value + " does not have an "
                               "expression on each side")
+                        return None
                 elif tokens[i].value == Symbols.open_bracket:
-                    # TODO: Parse brackets
-                    pass
+                    # When we get to here, all other operators should have been parsed, so the current expression
+                    # should be entirely within brackets
+                    if tokens[-1].value == Symbols.close_bracket:
+                       return BracketExpression(parse_expression(tokens[1:-1]))
+                    else:
+                        print("Error in parse_expression: trying to parse bracket expression but last token is not close bracket. ")
+                        return None
                 elif tokens[i].value == Symbols.close_bracket:
                     # TODO: Parse brackets
                     pass
+            else: # If expression is in brackets, skip it as we want to leave it until last
+                if tokens[i].value == Symbols.open_bracket:
+                    # skip to the closed bracket
+                    while tokens[i].value != Symbols.close_bracket:
+                        if i + 1 == len(tokens):
+                            print("Error in parse_expression: Missing closing bracket")
+                            return None
+                        i += 1
+
+            i += 1                    
 
     # If got to here then no tokens in tokens are operators.
     # tokens should therefore have length of 1, as you can't have adjacent constants/variables
@@ -94,10 +111,10 @@ def parse_equation(string):
 
 # ~~~~~~ TESTING ~~~~~~~~
 
-string = "31 + 3 * x = 4 / x + 1"
+string = "31 + 3 * x = 4 / (x + 1)"
 
 equation = parse_equation(string)
 
-print(equation)
+print(equation.debug_string())
 
 # ~~~~~~~~~~~~~~~~~~~~~~~

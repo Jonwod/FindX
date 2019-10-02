@@ -8,6 +8,9 @@ class Equation:
     def __str__(self):
         return str(self.lhs) + " = " + str(self.rhs)
 
+    def debug_string(self):
+        return self.lhs.debug_string() + " = " + self.rhs.debug_string()
+
 
 
 # ~~~~~~ TESTING ~~~~~~~~

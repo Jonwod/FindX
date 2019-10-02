@@ -1,6 +1,7 @@
 
 class Expression:
-    pass
+    def debug_string(self):
+        return str(self)   
 
 
 class Constant(Expression):
@@ -29,33 +30,46 @@ class BinaryOperation(Expression):
     def __init__(self, op1, op2):
         self.op1, self.op2 = op1, op2
 
+    @property
+    def symbol(self):
+        """ Make sure to override """
+        return '?'
+
+    def debug_string(self):
+        return '<' + self.op1.debug_string() + ' ' + self.symbol + ' ' + self.op2.debug_string() +'>'
+
+    def __str__(self):
+        return str(self.op1) +' ' + self.symbol + ' ' + str(self.op2)
+
 
 class Power(BinaryOperation):
-    def __str__(self):
-        return str(self.op1) + " ^ " + str(self.op2)
+    @property
+    def symbol(self):
+        return '^'
 
 
 class Multiplication(BinaryOperation):
-    def __str__(self):
-        return str(self.op1) + " * " + str(self.op2)
+    @property
+    def symbol(self):
+        return '*'
 
 
 class Division(BinaryOperation):
-    def __str__(self):
-        return str(self.op1) + " / " + str(self.op2)
+    @property
+    def symbol(self):
+        return '/'
 
 
 class Addition(BinaryOperation):
-    def evaluate(self):
-        return self.op1 + self.op2
-
-    def __str__(self):
-        return str(self.op1) + " + " + str(self.op2)
+    @property
+    def symbol(self):
+        return '+'
 
 
 class Subtraction(BinaryOperation):
-    def __str__(self):
-        return str(self.op1) + " - " + str(self.op2)
+    @property
+    def symbol(self):
+        return '-'
 
 
 class BracketExpression(Expression):
@@ -65,16 +79,8 @@ class BracketExpression(Expression):
     def __str__(self):
         return "(" + str(self.contained_expression) + ")"
 
-
-# class CompoundExpression(Expression):
-#     def __init__(self, operations):
-#         self.operations = operations
-#
-#     def __str__(self):
-#         string = ""
-#         for op in self.operations:
-#             string += str(op)
-#         return string
+    def debug_string(self):
+        return "(" + self.contained_expression.debug_string() + ")"
 
 
 # ~~~~~~ TESTING ~~~~~~~~
